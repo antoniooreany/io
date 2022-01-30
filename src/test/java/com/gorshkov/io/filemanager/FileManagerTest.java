@@ -8,10 +8,10 @@ class FileManagerTest {
 
     private static final String PATH_FOR_COUNTING = "./src/test/java/com/gorshkov/io/filemanager/testfolders/counting";
 
-    private static final String SRC_PATH_FOR_COPYING = "./src/test/java/com/gorshkov/io/filemanager/testfolders/copyingandmoving/file1";
+    private static final String SRC_PATH_FOR_COPYING = "./src/test/java/com/gorshkov/io/filemanager/testfolders/copyingandmoving/src/file1";
     private static final String DST_PATH_FOR_COPYING = "./src/test/java/com/gorshkov/io/filemanager/testfolders/copyingandmoving/dst/file1";
 
-    private static final String SRC_PATH_FOR_MOVING = "./src/test/java/com/gorshkov/io/filemanager/testfolders/copyingandmoving/file2";
+    private static final String SRC_PATH_FOR_MOVING = "./src/test/java/com/gorshkov/io/filemanager/testfolders/copyingandmoving/src/file2";
     private static final String DST_PATH_FOR_MOVING = "./src/test/java/com/gorshkov/io/filemanager/testfolders/copyingandmoving/dst/file2";
 
     @org.junit.jupiter.api.Test
