@@ -49,14 +49,14 @@ public class FileManager {
     public static void copy(String from, String to) throws IOException, NotDirectoryPathException {
         File fileTo = new File(to);
         if (fileTo.isFile()) {
-            throw new NotDirectoryPathException("The destination path '" + to + "' is not directory name.");
+            throw new NotDirectoryPathException("The destination path '" + to + "' is not a directory name.");
         }
         File fileFrom = new File(from);
         if (fileFrom.isDirectory()) {
             for (File file : fileFrom.listFiles()) {
                 copy(file.getAbsolutePath(), to); //TODO not 'to', but 'to\...'
             }
-        } else copyOneFile(fileFrom.getAbsolutePath(), to);
+        } else copyFile(fileFrom.getAbsolutePath(), to);
     }
 
     public static void move(String from, String to) throws IOException, NotDirectoryPathException {
@@ -65,7 +65,7 @@ public class FileManager {
         boolean deleted = file.delete();
     }
 
-    private static void copyOneFile(String from, String to) throws IOException {
+    private static void copyFile(String from, String to) throws IOException {
         try (InputStream is = new FileInputStream(from); OutputStream os = new FileOutputStream(to)) {
             byte[] buffer = new byte[BUFFER_SIZE];
             int length;
