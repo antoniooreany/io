@@ -1,7 +1,8 @@
 package com.gorshkov.io.fileanalyzer;
 
-import java.io.FileReader;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -20,30 +21,37 @@ import java.util.regex.Pattern;
 
 public class FileAnalyzer {
 
-    public int numberOfMatches(String filePath, String word) throws IOException {
 
+    //  duck mcduck. afa afasf duck sfs. safkjlfsdfv sfsdf. adaducksfsf.duck!!
+    public static int numberOfMatches(String filePath, String word) throws IOException {
         int count = 0;
-
-        FileReader reader = new FileReader(filePath);
-
-        Pattern p = Pattern.compile("\\b" + word + "\\b", Pattern.UNICODE_CASE | Pattern.CASE_INSENSITIVE);
-        Matcher m = p.matcher(s);
+        CharSequence charSequence = getStringReadFromFile(filePath);
+        Pattern p = Pattern.compile(word);
+        Matcher m = p.matcher(charSequence);
         while (m.find()) count++;
 
-        reader.close();
         return count;
     }
 
-    public String allSentencesWithWord(String filePath, String word) {
-        String result = "";
-
-
-        return result;
+    //  duck mcduck. afa afasf duck sfs. safkjlfsdfv sfsdf. adaducksfsf.duck!!
+    public static void printAllSentencesWithWord(String filePath, String word) throws IOException {
+        // TODO Regex: ([^|\\.|?|!].*[duck]+.*[\\.|?|!])
+        CharSequence text = getStringReadFromFile(filePath);
+        Pattern pattern = Pattern.compile("([^|\\.|?|!].*[" + word + "]+.*[\\.|?|!])");
+        Matcher matcher = pattern.matcher(text);
+        while (matcher.find()) {
+            String substring = text.toString().substring(matcher.start(), matcher.end());
+            System.out.println(substring);
+        }
     }
 
+    public static void main(String[] args) throws IOException {
+//        printAllSentencesWithWord(args[0], args[1]);
+//        System.out.println(numberOfMatches(args[0], args[1]));
+//        printAllSentencesWithWord(FILE_PATH, "duck");
+    }
 
-    public static void main(String[] args) {
-        String filePath = "C:/Users/GAS_Dell_XPS9310/IdeaProjects/io/src/test/java/com/gorshkov/io/fileanalyzer/";
-
+    private static String getStringReadFromFile(String fileName) throws IOException {
+        return new String(Files.readAllBytes(Paths.get(fileName)));
     }
 }
