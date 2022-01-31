@@ -66,11 +66,11 @@ public class FileManager {
     }
 
     private static void copyFile(String from, String to) throws IOException {
-        try (InputStream is = new FileInputStream(from); OutputStream os = new FileOutputStream(to)) {
+        try (InputStream inputStream = new FileInputStream(from); OutputStream outputStream = new FileOutputStream(to)) {
             byte[] buffer = new byte[BUFFER_SIZE];
             int length;
-            while ((length = is.read(buffer)) > 0) {
-                os.write(buffer, 0, length);
+            while ((length = inputStream.read(buffer)) > 0) {
+                outputStream.write(buffer, 0, length);
             }
         }
     }

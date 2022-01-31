@@ -1,8 +1,9 @@
 package com.gorshkov.io.fileanalyzer;
 
-import java.io.IOException;
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -21,6 +22,7 @@ import java.util.regex.Pattern;
 
 public class FileAnalyzer {
 
+    private static final int BUFFER_SIZE = 1024;
 
     //  duck mcduck. afa afasf duck sfs. safkjlfsdfv sfsdf. adaducksfsf.duck!!
     public static int numberOfMatches(String filePath, String word) throws IOException {
@@ -53,5 +55,18 @@ public class FileAnalyzer {
 
     private static String getStringReadFromFile(String fileName) throws IOException {
         return new String(Files.readAllBytes(Paths.get(fileName)));
+    }
+
+    private static String getStringReadFromFileUsingStream(String fileName) throws IOException {
+        ArrayList<String> arrayListBuffer;
+        try (InputStream inputStream = new FileInputStream(fileName); OutputStream outputStream = new ByteArrayOutputStream()) {
+            arrayListBuffer = new ArrayList();
+            byte[] buffer = new byte[BUFFER_SIZE];
+            int length;
+            while ((length = inputStream.read(buffer)) > 0) {
+                outputStream.write(buffer, 0, length);
+            }
+        }
+        return arrayListBuffer.toString();
     }
 }
