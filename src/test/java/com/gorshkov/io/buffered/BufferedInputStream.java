@@ -1,5 +1,6 @@
 package com.gorshkov.io.buffered;
 
+import java.io.BufferedOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -8,6 +9,7 @@ public class BufferedInputStream extends InputStream {
     private InputStream target;
     private byte[] buffer;
     private int currentIndex;
+    private int count;
 
     public BufferedInputStream(InputStream target) {
         this.target = target;
