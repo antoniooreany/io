@@ -25,7 +25,7 @@ public class BufferedOutputStream extends OutputStream {
 
     @Override
     public void write(byte[] b) throws IOException {
-        super.write(b);
+        write(b, 0, b.length);
     }
 
     @Override
@@ -53,6 +53,7 @@ public class BufferedOutputStream extends OutputStream {
 
     @Override
     public void close() throws IOException {
-        super.close();
+        flush();
+        target.close();
     }
 }
