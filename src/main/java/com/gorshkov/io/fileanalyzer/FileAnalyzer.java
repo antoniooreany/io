@@ -47,9 +47,14 @@ public class FileAnalyzer {
         }
     }
 
+//    C:\Users\GAS_Dell_XPS9310\.jdks\openjdk-17.0.2\bin\java.exe -classpath C:\Users\GAS_Dell_XPS9310\IdeaProje
+//    at com.gorshkov.io.fileanalyzer.FileAnC:\Users\GAS_Dell_XPS9310\.jdks\openjdk-17.0.2\bin\java.exe -classpath C:\Users\GAS_Dell_XPS9310\IdeaProje
+//    cts\io\target\classes com.gorshkov.io.fileanalyzer.FileAnalyzer C:\Users\GAS_Dell_XPS9310\IdeaProjects\io\src\test\java\com\gorshkov\io\fileanalyzer\sto
+//    ry.txt duck
+
     public static void main(String[] args) throws IOException {
-//        printAllSentencesWithWord(args[0], args[1]);
-//        System.out.println(numberOfMatches(args[0], args[1]));
+        printAllSentencesWithWord(args[0], args[1]);
+        System.out.println(numberOfMatches(args[0], args[1]));
 //        printAllSentencesWithWord(FILE_PATH, "duck");
     }
 
