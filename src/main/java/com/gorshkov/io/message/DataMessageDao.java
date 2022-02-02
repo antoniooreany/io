@@ -4,6 +4,14 @@ import java.io.*;
 import java.util.Date;
 
 public class DataMessageDao implements MessageDao {
+
+    public static void main(String[] args) throws IOException, ClassNotFoundException {
+        MessageDao messageDao = new DataMessageDao();
+        messageDao.save(new Message(new Date(), "hello", 10));
+        Message message = messageDao.load();
+        System.out.println(message);
+    }
+
     @Override
     public void save(Message message) throws IOException {
         try (DataOutputStream dataOutputStream = new DataOutputStream(new FileOutputStream("message2"));) {
@@ -28,6 +36,8 @@ public class DataMessageDao implements MessageDao {
             dataInputStream.readNBytes(messageContent, 0, messageLength);
         }
 
-        return new Message(new Date(time), messageContent.toString(), amount);
+        return new Message(new Date(time), new String(messageContent), amount);
     }
+
+
 }
