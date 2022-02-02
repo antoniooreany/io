@@ -1,22 +1,33 @@
 package com.gorshkov.io.message;
 
-import java.io.DataOutputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import java.io.*;
+import java.util.Date;
 
-public class DataMessageDao implements MessageDao{
+public class DataMessageDao implements MessageDao {
     @Override
     public void save(Message message) throws IOException {
-        DataOutputStream dataOutputStream = new DataOutputStream(new FileOutputStream("message2"));
-        dataOutputStream.writeLong(message.getDate().getTime());
-        dataOutputStream.writeInt(message.getAmount());
-        dataOutputStream.writeInt(message.getMessage().length());
-        dataOutputStream.write(message.getMessage().getBytes());
+        try (DataOutputStream dataOutputStream = new DataOutputStream(new FileOutputStream("message2"));) {
+            dataOutputStream.writeLong(message.getDate().getTime());
+            dataOutputStream.writeInt(message.getAmount());
+            dataOutputStream.writeInt(message.getMessage().length());
+            dataOutputStream.write(message.getMessage().getBytes());
+        }
     }
 
     @Override
     public Message load() throws FileNotFoundException, IOException, ClassNotFoundException {
-        return null;
+        long time;
+        int amount;
+        int messageLength;
+        byte[] messageContent;
+        try (DataInputStream dataInputStream = new DataInputStream(new FileInputStream("message2"));) {
+            time = dataInputStream.readLong();
+            amount = dataInputStream.readInt();
+            messageLength = dataInputStream.readInt();
+            messageContent = new byte[messageLength];
+            dataInputStream.readNBytes(messageContent, 0, messageLength);
+        }
+
+        return new Message(new Date(time), messageContent.toString(), amount);
     }
 }
