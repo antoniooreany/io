@@ -5,13 +5,6 @@ import java.util.Date;
 
 public class DataMessageDao implements MessageDao {
 
-    public static void main(String[] args) throws IOException, ClassNotFoundException {
-        MessageDao messageDao = new DataMessageDao();
-        messageDao.save(new Message(new Date(), "hello", 10));
-        Message message = messageDao.load();
-        System.out.println(message);
-    }
-
     @Override
     public void save(Message message) throws IOException {
         try (DataOutputStream dataOutputStream = new DataOutputStream(new FileOutputStream("message2"));) {
@@ -24,20 +17,13 @@ public class DataMessageDao implements MessageDao {
 
     @Override
     public Message load() throws FileNotFoundException, IOException, ClassNotFoundException {
-        long time;
-        int amount;
-        int messageLength;
-        byte[] messageContent;
         try (DataInputStream dataInputStream = new DataInputStream(new FileInputStream("message2"));) {
-            time = dataInputStream.readLong();
-            amount = dataInputStream.readInt();
-            messageLength = dataInputStream.readInt();
-            messageContent = new byte[messageLength];
+            long time = dataInputStream.readLong();
+            int amount = dataInputStream.readInt();
+            int messageLength = dataInputStream.readInt();
+            byte[] messageContent = new byte[messageLength];
             dataInputStream.readNBytes(messageContent, 0, messageLength);
+            return new Message(new Date(time), new String(messageContent), amount);
         }
-
-        return new Message(new Date(time), new String(messageContent), amount);
     }
-
-
 }
