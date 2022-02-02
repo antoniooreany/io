@@ -28,22 +28,27 @@ public class FileAnalyzer {
     public static int numberOfMatches(String filePath, String word) throws IOException {
         int count = 0;
         CharSequence charSequence = getStringReadFromFile(filePath);
-        Pattern p = Pattern.compile(word);
-        Matcher m = p.matcher(charSequence);
-        while (m.find()) count++;
+        Pattern pattern = Pattern.compile(word);
+        Matcher matcher = pattern.matcher(charSequence);
+        while (matcher.find()) count++;
 
         return count;
     }
 
     //  duck mcduck. afa afasf duck sfs. safkjlfsdfv sfsdf. adaducksfsf.duck!!
     public static void printAllSentencesWithWord(String filePath, String word) throws IOException {
-        // TODO Regex: ([^|\\.|?|!].*[duck]+.*[\\.|?|!])
+        // TODO Regex: ([^\\.?!].*\bduck\b.*[\\.?!])
         CharSequence text = getStringReadFromFile(filePath);
-        Pattern pattern = Pattern.compile("([^|\\.|?|!].*[" + word + "]+.*[\\.|?|!])");
+//        Pattern pattern = Pattern.compile("([^|\\.|?|!].*[" + word + "]+.*[\\.|?|!])");
+//        Pattern pattern = Pattern.compile(".*([\\.?!].*\b" + word + "\b.*[\\.?!]).*");
+//        Pattern pattern = Pattern.compile(".*(\b" + word + "\b).*");
+//        Pattern pattern = Pattern.compile(".*(.*" + word + ".*).*");
+        Pattern pattern = Pattern.compile("" + word + "");
         Matcher matcher = pattern.matcher(text);
         while (matcher.find()) {
-            String substring = text.toString().substring(matcher.start(), matcher.end());
+            String substring = text.toString().substring(matcher.start(), matcher.end()); //TODO Correct this.
             System.out.println(substring);
+
         }
     }
 
